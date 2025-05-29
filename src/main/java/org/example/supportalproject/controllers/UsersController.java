@@ -26,25 +26,6 @@ public class UsersController {
   @Autowired
   private UserService userService;
 
-  @GetMapping
-  public List<Users> getUsers() {
-    return userService.usersList();
-  }
-
-  @GetMapping("/{id}")
-  public ResponseEntity<Users> getUserById(Long id) {
-    return userService.findById(id)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
-  }
-
-  @GetMapping("/email/{email}")
-  public ResponseEntity<Users> getUserByEmail(String email) {
-    return userService.findByEmail(email)
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.notFound().build());
-  }
-
   @PostMapping
   public Users createUser(@RequestBody Users user) {
     return userService.save(user);

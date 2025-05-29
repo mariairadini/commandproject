@@ -26,12 +26,6 @@ public class UsersController {
   @Autowired
   private UserService userService;
 
-  private final UserRepository userRepository;
-
-  public UsersController(UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
-
   @GetMapping
   public List<Users> getUsers() {
     return userService.listar();

@@ -3,7 +3,6 @@ package org.example.supportalproject.repositories;
 import java.util.Optional;
 import org.example.supportalproject.domain.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
 /**
  * @author Maria Tablante (maria.tablante@autodesk.com).

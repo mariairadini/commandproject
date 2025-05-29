@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Spring Boot Application</title>
+</head>
+<body>
+<h1>Users List</h1>
+
+<table>
+  <tr>
+    <th>Oxigen ID</th>
+    <th>Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+    <th>Email Exists</th>
+    <th>Email Verified</th>
+    <th>2FaEnabled</th>
+    <th>GDPR Status</th>
+    <th>PHR Status</th>
+    <th>Last Modifiedl</th>
+  </tr>
+  <tr th:each="user : ${users}">
+    <td th:text="${user.oxygenId}">123</td>
+    <td th:text="${user.name}">Name</td>
+    <td th:text="${user.lastName}">Last Name</td>
+    <td th:text="${user.email}">Email</td>
+    <td th:text="${user.emailExists}">Email Exists</td>
+    <td th:text="${user.emailVerified}">Email Verified</td>
+    <th th:text="${user.twoFaEnabled}">2FaEnabled</th>
+    <td th:text="${user.gdprStatus}">GDPR Status</td>
+    <td th:text="${user.phrStatus}">PHR Status</td>
+    <td th:text="${user.lastModified}">Last Modifiedl</td>
+  </tr>
+</table>
+
+</body>
+</html>

@@ -22,7 +22,8 @@ public class UserCreateHandler {
   @KafkaListener(
       id = "userConsumerClient",
       topics = "user.created",
-      groupId = "dispatch.order.created.consumer"
+      groupId = "dispatch.order.created.consumer",
+      containerFactory = "kafkaListenerContainerFactory"
   )
   public void listen(UserCreated payload) {
     log.info("UserCreateHandler: Received payload: " + payload);

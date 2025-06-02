@@ -22,16 +22,18 @@ class UserCreateHandlerTest {
 
   private UserCreateHandler handler;
   private DispatchService mockDispatchService;
+  private Users mockUserCreated;
 
   @BeforeEach
   void setUp() {
     mockDispatchService = mock(DispatchService.class);
+    mockUserCreated = mock(Users.class);
     handler = new UserCreateHandler(mockDispatchService);
   }
 
   @Test
   public void testListen() {
-    UserCreated testEvent = TestEventData.buildUserCreatedEvent(randomUUID(), randomUUID().toString());
+    UserCreated testEvent = TestEventData.buildUserCreatedEvent(randomUUID(), mockUserCreated);
     handler.listen(testEvent);
     verify(mockDispatchService, times(1)).process(testEvent);
   }

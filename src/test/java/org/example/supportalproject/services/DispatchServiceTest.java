@@ -2,6 +2,7 @@ package org.example.supportalproject.services;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 import java.util.UUID;
 import org.example.supportalproject.domain.Users;
@@ -16,15 +17,17 @@ import org.junit.jupiter.api.Test;
  */
 class DispatchServiceTest {
   private DispatchService dispatchService;
+  private Users mockUserCreated;
 
   @BeforeEach
   void setUp() {
+    mockUserCreated = mock(Users.class);
     dispatchService = new DispatchService();
   }
 
   @Test
   public void testProcess() {
-    UserCreated testEvent = TestEventData.buildUserCreatedEvent(randomUUID(), randomUUID().toString());
+    UserCreated testEvent = TestEventData.buildUserCreatedEvent(randomUUID(), mockUserCreated);
     dispatchService.process(testEvent);
   }
 }

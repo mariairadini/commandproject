@@ -10,7 +10,7 @@ import org.example.supportalproject.messages.UserCreated;
  */
 public class TestEventData {
 
-  public static UserCreated buildUserCreatedEvent(UUID userId, String user) {
+  public static UserCreated buildUserCreatedEvent(UUID userId, Users user) {
     return UserCreated.builder()
         .userId(UUID.randomUUID())
         .userCreated(user)

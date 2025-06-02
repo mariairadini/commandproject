@@ -17,5 +17,5 @@ import org.example.supportalproject.domain.Users;
 @AllArgsConstructor
 public class UserCreated {
   UUID userId;
-  String userCreated;
+  Users userCreated;
 }

@@ -27,6 +27,10 @@ public class UserCreateHandler {
   )
   public void listen(UserCreated payload) {
     log.info("UserCreateHandler: Received payload: " + payload);
-    dispatchService.process(payload);
+    try {
+      dispatchService.process(payload);
+    } catch (Exception e) {
+      log.error("Procesing failuere", e);
+    }
   }
 }

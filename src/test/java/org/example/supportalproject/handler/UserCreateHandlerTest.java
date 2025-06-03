@@ -2,6 +2,7 @@ package org.example.supportalproject.handler;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -32,8 +33,17 @@ class UserCreateHandlerTest {
   }
 
   @Test
-  public void testListen() {
+  public void testListenSuccess() throws Exception {
     UserCreated testEvent = TestEventData.buildUserCreatedEvent(randomUUID(), mockUserCreated);
+    handler.listen(testEvent);
+    verify(mockDispatchService, times(1)).process(testEvent);
+  }
+
+  @Test
+  public void testListenServiceThrowsException() throws Exception {
+    UserCreated testEvent = TestEventData.buildUserCreatedEvent(randomUUID(), mockUserCreated);
+    doThrow(new RuntimeException("Service failure")).when(mockDispatchService).process(testEvent);
+
     handler.listen(testEvent);
     verify(mockDispatchService, times(1)).process(testEvent);
   }

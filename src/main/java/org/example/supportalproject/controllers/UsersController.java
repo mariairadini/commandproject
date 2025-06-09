@@ -1,12 +1,8 @@
 package org.example.supportalproject.controllers;
 
-import java.util.List;
 import org.example.supportalproject.domain.Users;
-import org.example.supportalproject.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,48 +19,41 @@ import org.example.supportalproject.services.UserService;
 @RequestMapping("/users")
 public class UsersController {
 
-  @Autowired
-  private UserService userService;
+
+  private final UserService userService;
+
+  public UsersController(UserService userService) {
+    this.userService = userService;
+  }
 
   @PostMapping
-  public Users createUser(@RequestBody Users user) {
-    return userService.save(user);
+  public ResponseEntity<Users> createUser(@RequestBody Users user) {
+    Users userCreated = userService.create(user);
+    return ResponseEntity.status(201).body(userCreated);
   }
 
   @PutMapping("/{id}")
   public ResponseEntity<Users> updateUser(@PathVariable Long id, @RequestBody Users user) {
-    return userService.findById(id)
-        .map(existingUser -> {
-      existingUser.setOxygenId(user.getOxygenId());
-      existingUser.setName(user.getName());
-      existingUser.setLastName(user.getLastName());
-      existingUser.setEmail(user.getEmail());
-      existingUser.setPassword(user.getPassword());
-      existingUser.setEmailExists(user.isEmailExists());
-      existingUser.setEmailVerified(user.isEmailVerified());
-      existingUser.setTwoFaEnabled(user.isTwoFaEnabled());
-      existingUser.setGdprStatus(user.isGdprStatus());
-      existingUser.setPhrStatus(user.isPhrStatus());
-      existingUser.setLastModified(user.getLastModified());
-      return ResponseEntity.ok(userService.save(existingUser));
-    })
+    return userService.update(id, user)
+        .map(ResponseEntity::ok)
+        .orElseGet(() -> ResponseEntity.notFound().build());
+  }
+
+  public ResponseEntity<Users> partialUpdateUser(@PathVariable Long id, @RequestBody Users userNewInfo) {
+    return userService.partialUpdate(id, userNewInfo)
+        .map(ResponseEntity::ok)
         .orElse(ResponseEntity.notFound().build());
   }
+
   @DeleteMapping("/{id}")
   public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-    if (userService.findById(id).isPresent()) {
-      userService.deleteById(id);
-      return ResponseEntity.ok().build();
-    }
-    return ResponseEntity.notFound().build();
+    boolean deleted = userService.deleteById(id);
+      return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
   }
 
   @DeleteMapping("/email/{email}")
   public ResponseEntity<Void> deleteByEmail(@PathVariable String email) {
-    if (userService.findByEmail(email).isPresent()) {
-      userService.deleteByEmail(email);
-      return ResponseEntity.ok().build();
-    }
-    return ResponseEntity.notFound().build();
+    boolean deleted = userService.deleteByEmail(email);
+      return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
   }
 }

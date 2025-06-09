@@ -86,7 +86,7 @@ public class Users {
     this.password = password;
   }
 
-  public boolean isEmailExists() {
+  public boolean getEmailExists() {
     return emailExists;
   }
 
@@ -94,7 +94,7 @@ public class Users {
     this.emailExists = emailExists;
   }
 
-  public boolean isEmailVerified() {
+  public boolean getEmailVerified() {
     return emailVerified;
   }
 
@@ -102,7 +102,7 @@ public class Users {
     this.emailVerified = emailVerified;
   }
 
-  public boolean isTwoFaEnabled() {
+  public boolean getTwoFaEnabled() {
     return twoFaEnabled;
   }
 
@@ -110,7 +110,7 @@ public class Users {
     this.twoFaEnabled = twoFaEnabled;
   }
 
-  public boolean isGdprStatus() {
+  public boolean getGdprStatus() {
     return gdprStatus;
   }
 
@@ -118,7 +118,7 @@ public class Users {
     this.gdprStatus = gdprStatus;
   }
 
-  public boolean isPhrStatus() {
+  public boolean getPhrStatus() {
     return phrStatus;
   }
 
